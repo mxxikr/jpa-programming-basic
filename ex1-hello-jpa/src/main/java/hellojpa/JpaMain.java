@@ -18,10 +18,13 @@ public class JpaMain {
 
         try {
 
-            Member member = new Member(200L, "member200");
-            entityManager.persist(member);
+            Member member = entityManager.find(Member.class, 100L);
+            member.setName("AAAAAA");
 
-            entityManager.flush();
+//            entityManager.detach(member);
+            entityManager.clear();
+
+            Member member2 = entityManager.find(Member.class, 100L);
 
             System.out.println("============================");
 
