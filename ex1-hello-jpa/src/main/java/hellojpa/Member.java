@@ -8,28 +8,36 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
+@TableGenerator(
+        name = "MEMBER_SEQ_GENERATOR",
+        table = "MY_SEQUENCES",
+        pkColumnValue = "MEMBER_SEQ", allocationSize = 1)
 public class Member {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "MEMBER_SEQ_GENERATOR")
     private Long id;
 
-    @Column(name = "name", insertable = true, updatable = true, unique = true, columnDefinition = "varchar(100 default 'EMPTY'")
+    @Column(name = "name", nullable = false)
     private String username;
 
-    private int age;
+    public Member() {
 
-    @Enumerated(EnumType.STRING)
-    private RoleType roleType;
+    }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
+    public Long getId() {
+        return id;
+    }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    private LocalDate testLocalDate;
-    private LocalDateTime testLocalDateTime;
+    public String getUsername() {
+        return username;
+    }
 
-    @Lob
-    private String description;
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }
