@@ -17,10 +17,32 @@ public class JpaMain {
         tx.begin(); // 트랜잭션 시작
 
         try {
+            Team team = new Team();
+            team.setName("TeamA");
+            entityManager.persist(team);
+
+            Team team2 = new Team();
+            team2.setName("TeamB");
+            entityManager.persist(team2);
+
             Member member = new Member();
-            member.setUsername("C");
+            member.setUsername("member1");
+//            member.setTeamId(team.getId());
+            member.setTeam(team);
 
             entityManager.persist(member);
+
+            Member findMember = entityManager.find(Member.class, member.getId());
+
+//            Long findTeamId = findMember.getTeamId();
+//            Team findTeam = entityManager.find(Team.class, findTeamId);
+            Team findTeam = findMember.getTeam();
+            System.out.println("findTeam.getName() = " + findTeam.getName());
+
+            // 연관 관계 수정
+            Team newTeam = entityManager.find(Team.class, 2L);
+            findMember.setTeam(newTeam);
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
