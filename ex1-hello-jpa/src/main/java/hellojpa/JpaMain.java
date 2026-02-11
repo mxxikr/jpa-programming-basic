@@ -21,20 +21,18 @@ public class JpaMain {
             team.setName("TeamA");
             entityManager.persist(team);
 
-            Team team2 = new Team();
-            team2.setName("TeamB");
-            entityManager.persist(team2);
-
             Member member = new Member();
             member.setUsername("member1");
-            member.setTeam(team);
+//            member.changeTeam(team);
             entityManager.persist(member);
+
+            team.addMember(member);
 
             entityManager.flush();
             entityManager.clear();
-            
-            Member findMember = entityManager.find(Member.class, member.getId());
-            List<Member> members = findMember.getTeam().getMembers();
+
+            Team findTeam = entityManager.find(Team.class, team.getId());
+            List<Member> members = findTeam.getMembers();
 
             for (Member m : members) {
                 System.out.println("m.getUsername() = " + m.getUsername());
