@@ -17,17 +17,6 @@ public class JpaMain {
         tx.begin(); // 트랜잭션 시작
 
         try {
-
-            Member member = entityManager.find(Member.class, 100L);
-            member.setName("AAAAAA");
-
-//            entityManager.detach(member);
-            entityManager.clear();
-
-            Member member2 = entityManager.find(Member.class, 100L);
-
-            System.out.println("============================");
-
             tx.commit();
         } catch (Exception e) {
             tx.rollback();

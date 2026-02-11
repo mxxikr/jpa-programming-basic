@@ -1,9 +1,11 @@
 package hellojpa;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 public class Member {
@@ -11,32 +13,23 @@ public class Member {
     @Id
     private Long id;
 
-    @Column(unique = true, length = 10)
-    private String name;
+    @Column(name = "name", insertable = true, updatable = true, unique = true, columnDefinition = "varchar(100 default 'EMPTY'")
+    private String username;
+
     private int age;
 
-    public Member(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    @Enumerated(EnumType.STRING)
+    private RoleType roleType;
 
-    public Member() {
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createDate;
 
-    }
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModifiedDate;
 
-    public Long getId() {
-        return id;
-    }
+    private LocalDate testLocalDate;
+    private LocalDateTime testLocalDateTime;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    @Lob
+    private String description;
 }
