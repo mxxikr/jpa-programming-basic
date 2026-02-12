@@ -17,16 +17,19 @@ public class JpaMain {
         tx.begin(); // 트랜잭션 시작
 
         try {
-            Member member = new Member();
-            member.setUsername("member1");
+            Movie movie = new Movie();
+            movie.setDirector("aaaa");
+            movie.setActor("bbbbb");
+            movie.setName("바람과함께사라지다");
+            movie.setPrice(10000);
 
-            entityManager.persist(member);
+            entityManager.persist(movie);
 
-            Team team = new Team();
-            team.setName("teamA");
-            team.getMembers().add(member);
+            entityManager.flush();
+            entityManager.clear();
 
-            entityManager.persist(team);
+            Movie findMovie = entityManager.find(Movie.class, movie.getId());
+            System.out.println("findMovie = " + findMovie);
 
             tx.commit();
         } catch (Exception e) {
