@@ -1,0 +1,19 @@
+package jpabook.jpashop.domain;
+
+import jakarta.persistence.*;
+
+@Entity
+public class Delivery {
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private String city;
+    private String street;
+    private String zipCode;
+    private DeliveryStatus status;
+
+    @OneToOne
+    @JoinColumn(name = "delivery")
+    private Order order;
+}
