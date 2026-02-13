@@ -25,8 +25,9 @@ public class Member extends BaseEntity{
     @JoinColumn(name = "LOCKER_ID")
     private Locker locker;
 
-    @OneToMany
-    @JoinTable(name = "member")
+    @OneToMany(mappedBy = "member")
+//    @OneToMany
+//    @JoinTable(name = "member")
     private List<MemberProduct> memberProducts = new ArrayList<>();
 
     public Long getId() {
