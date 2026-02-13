@@ -8,12 +8,20 @@ public class Delivery extends BaseEntity {
     @GeneratedValue
     private Long id;
 
-    private String city;
-    private String street;
-    private String zipCode;
+    @Embedded
+    private Address address;
+
     private DeliveryStatus status;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery")
     private Order order;
+
+    public DeliveryStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DeliveryStatus status) {
+        this.status = status;
+    }
 }
