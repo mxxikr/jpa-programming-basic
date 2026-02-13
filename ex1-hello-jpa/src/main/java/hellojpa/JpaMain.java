@@ -19,26 +19,14 @@ public class JpaMain {
         tx.begin(); // 트랜잭션 시작
 
         try {
-            Team team = new Team();
-            team.setName("teamA");
-            entityManager.persist(team);
+            Child child1 = new Child();
+            Child child2 = new Child();
 
-            Member member1 = new Member();
-            member1.setUsername("hello");
-            member1.setTeam(team);
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
 
-            entityManager.persist(member1);
-
-            entityManager.flush();
-            entityManager.clear();
-
-            Member m = entityManager.find(Member.class, member1.getId());
-
-            System.out.println("m.getTeam().getClass() = " + m.getTeam().getClass());
-
-            System.out.println("==================");
-            m.getTeam().getName(); // 초기화
-            System.out.println("==================");
+            entityManager.persist(parent);
 
             tx.commit();
         } catch (Exception e) {
