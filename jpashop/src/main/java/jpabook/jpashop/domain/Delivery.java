@@ -13,7 +13,7 @@ public class Delivery extends BaseEntity {
     private String zipCode;
     private DeliveryStatus status;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery")
     private Order order;
 }
