@@ -17,7 +17,7 @@ public class Member extends BaseEntity{
     @Column(name = "name")
     private String username;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
     private Team team;
 
@@ -44,5 +44,13 @@ public class Member extends BaseEntity{
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }
