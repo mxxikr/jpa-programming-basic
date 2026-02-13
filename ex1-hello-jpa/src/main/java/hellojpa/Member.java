@@ -17,6 +17,23 @@ public class Member extends BaseEntity{
     @Column(name = "name")
     private String username;
 
+    // 기간 Period
+    @Embedded
+    private Period WorkPeriod;
+
+    // 주소
+    @Embedded
+    private Address homeAddress;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "city", column = @Column(name = "WORK_CITY")),
+            @AttributeOverride(name = "street", column = @Column(name = "WORK_STREET")),
+            @AttributeOverride(name = "zipcode", column = @Column(name = "WORK_ZIPCODE"))
+
+    })
+    private Address workAddress;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
     private Team team;
@@ -52,5 +69,21 @@ public class Member extends BaseEntity{
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public Address getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
+    }
+
+    public Period getWorkPeriod() {
+        return WorkPeriod;
+    }
+
+    public void setWorkPeriod(Period workPeriod) {
+        WorkPeriod = workPeriod;
     }
 }
