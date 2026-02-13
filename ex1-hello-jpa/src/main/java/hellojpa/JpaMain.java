@@ -15,12 +15,21 @@ public class JpaMain {
         tx.begin(); // 트랜잭션 시작
 
         try {
-            Member member = new Member();
-            member.setUsername("hello");
-            member.setHomeAddress(new Address("city", "street", "1000"));
-            member.setWorkPeriod(new Period());
+            Address address = new Address("city", "street", "1000");
 
-            entityManager.persist(member);
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setHomeAddress(address);
+
+            Address copyAddress = new Address(address.getCity(), address.getStreet(), address.getZipcode());
+
+            Member member2 = new Member();
+            member2.setUsername("member1");
+            member2.setHomeAddress(copyAddress);
+
+            entityManager.persist(member2);
+
+//            member.getHomeAddress().setCity("newCity");
 
             tx.commit();
         } catch (Exception e) {

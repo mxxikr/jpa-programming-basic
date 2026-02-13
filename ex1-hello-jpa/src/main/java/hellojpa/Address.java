@@ -8,7 +8,7 @@ public class Address {
     private String street;
     private String zipcode;
 
-    private Address() {
+    public Address() {
     }
 
     public Address(String city, String street, String zipcode) {
@@ -21,7 +21,7 @@ public class Address {
         return city;
     }
 
-    public void setCity(String city) {
+    private void setCity(String city) {
         this.city = city;
     }
 
@@ -29,7 +29,7 @@ public class Address {
         return street;
     }
 
-    public void setStreet(String street) {
+    private void setStreet(String street) {
         this.street = street;
     }
 
@@ -37,7 +37,7 @@ public class Address {
         return zipcode;
     }
 
-    public void setZipcode(String zipcode) {
+    private void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
 }
