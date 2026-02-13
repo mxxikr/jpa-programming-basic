@@ -28,6 +28,12 @@ public class JpaMain {
 
             entityManager.persist(parent);
 
+            entityManager.flush();
+            entityManager.clear();
+
+            Parent findParent = entityManager.find(Parent.class, parent.getId());
+            findParent.getChildList().remove(0);
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
