@@ -32,7 +32,7 @@ public class JpaMain {
             entityManager.clear();
 
             Parent findParent = entityManager.find(Parent.class, parent.getId());
-            findParent.getChildList().remove(0);
+            entityManager.remove(findParent);
 
             tx.commit();
         } catch (Exception e) {
