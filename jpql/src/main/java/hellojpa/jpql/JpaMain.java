@@ -14,33 +14,25 @@ public class JpaMain {
         tx.begin(); // 트랜잭션 시작
 
         try {
-            Member member = new Member();
-            member.setUsername("member1");
-            member.setAge(10);
-            entityManager.persist(member);
+            for (int i = 0; i < 100; i++) {
+                Member member = new Member();
+                member.setUsername("member" + i);
+                member.setAge(i);
+                entityManager.persist(member);
+            }
+            
+            entityManager.flush();
+            entityManager.clear();
+            
+            List<Member> result = entityManager.createQuery("select m from Member m order by m.age desc", Member.class)
+                    .setFirstResult(0)
+                    .setMaxResults(10)
+                    .getResultList();
 
-            TypedQuery<Member> query1 = entityManager.createQuery("select m from Member m", Member.class);
-            TypedQuery<String> query2 = entityManager.createQuery("select m.username from Member m", String.class);
-            Query query3 = entityManager.createQuery("select m.username, m.age from Member m");
-
-            Member result = query1.getSingleResult();
-            List<Member> resultList = query1.getResultList();
-            for (Member member1 : resultList) {
+            System.out.println("result.size() = " + result.size());
+            for (Member member1 : result) {
                 System.out.println("member1 = " + member1);
             }
-
-            Member result2 = entityManager.createQuery("select m from Member m where m.username = :username", Member.class)
-                    .setParameter("username", "member1")
-                    .getSingleResult();
-
-            System.out.println("result = " + result2.getUsername());
-
-            List resultList2 = entityManager.createQuery("select m.username, m.age from Member m").getResultList();
-
-            Object o = resultList2.get(0);
-            Object[] result3 = (Object[]) o;
-            System.out.println("username = " + result3[0]);
-            System.out.println("age = " + result3[1]);
 
             tx.commit();
         } catch (Exception e) {
