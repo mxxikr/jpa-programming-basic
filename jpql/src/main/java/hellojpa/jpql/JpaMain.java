@@ -3,6 +3,7 @@ package hellojpa.jpql;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Objects;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -26,8 +27,17 @@ public class JpaMain {
             entityManager.flush();
             entityManager.clear();
             
-            String query = "select m from Member m left join Team t on m.username = t.name";
-            List<Member> result = entityManager.createQuery(query, Member.class).getResultList();
+            String query = "select m.username, 'HELLO', TRUE from Member m "
+                    + "where m.type = :userType";
+            List<Objects[]> result = entityManager.createQuery(query)
+                    .setParameter("userType", MemberType.ADMIN)
+                    .getResultList();
+
+            for (Objects[] objects : result) {
+                System.out.println("objects = " + objects[0]);
+                System.out.println("objects = " + objects[1]);
+                System.out.println("objects = " + objects[2]);
+            }
 
             tx.commit();
         } catch (Exception e) {
