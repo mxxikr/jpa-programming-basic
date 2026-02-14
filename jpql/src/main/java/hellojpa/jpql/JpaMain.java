@@ -34,6 +34,14 @@ public class JpaMain {
                     .getSingleResult();
 
             System.out.println("result = " + result2.getUsername());
+
+            List resultList2 = entityManager.createQuery("select m.username, m.age from Member m").getResultList();
+
+            Object o = resultList2.get(0);
+            Object[] result3 = (Object[]) o;
+            System.out.println("username = " + result3[0]);
+            System.out.println("age = " + result3[1]);
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
