@@ -41,10 +41,12 @@ public class JpaMain {
             entityManager.flush();
             entityManager.clear();
 
-            String query = "select m from Member m join fetch m.team";
+            String query = "select t from Team t";
 
-
-            List<Team> result = entityManager.createQuery(query, Team.class).getResultList();
+            List<Team> result = entityManager.createQuery(query, Team.class)
+                    .setFirstResult(0)
+                    .setMaxResults(2)
+                    .getResultList();
 
             for (Team team : result) {
                 System.out.println("teamname = " + team.getName() + ", team = "+ team);
