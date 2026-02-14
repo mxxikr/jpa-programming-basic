@@ -25,29 +25,34 @@ public class JpaMain {
 
             Member member1 = new Member();
             member1.setUsername("회원1");
+            member1.setAge(0);
             member1.setTeam(teamA);
             entityManager.persist(member1);
 
             Member member2 = new Member();
             member2.setUsername("회원2");
+            member2.setAge(0);
             member2.setTeam(teamA);
             entityManager.persist(member2);
 
             Member member3 = new Member();
             member3.setUsername("회원3");
+            member3.setAge(0);
             member3.setTeam(teamB);
             entityManager.persist(member3);
 
-            entityManager.flush();
+            // Flush 자동 호출
+            int resultCount = entityManager.createQuery("update Member m set m.age = 20")
+                    .executeUpdate();
+
             entityManager.clear();
+            Member findMember = entityManager.find(Member.class, member1.getId());
 
-            List<Member> resultList = entityManager.createNamedQuery("Member.findByUsername", Member.class)
-                    .setParameter("username", "회원1")
-                    .getResultList();
+            System.out.println("findMember = " + findMember);
 
-            for (Member member : resultList) {
-                System.out.println("member = " + member);
-            }
+            System.out.println("member1 = " + member1.getAge());
+            System.out.println("member2 = " + member2.getAge());
+            System.out.println("member3 = " + member3.getAge());
 
             tx.commit();
         } catch (Exception e) {
