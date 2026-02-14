@@ -26,17 +26,19 @@ public class JpaMain {
 
             entityManager.flush();
             entityManager.clear();
-            
-            String query = "select m.username, 'HELLO', TRUE from Member m "
-                    + "where m.type = :userType";
-            List<Objects[]> result = entityManager.createQuery(query)
-                    .setParameter("userType", MemberType.ADMIN)
-                    .getResultList();
 
-            for (Objects[] objects : result) {
-                System.out.println("objects = " + objects[0]);
-                System.out.println("objects = " + objects[1]);
-                System.out.println("objects = " + objects[2]);
+            String query =
+                    "select " +
+                    "case when m.age <= 10 then '학생요금' " +
+                    "    when m.age >= 60 then '경로요금' " +
+                    "    else '일반 요금' " +
+                    "end " +
+                    "from Member m";
+
+            List<String> resultList = entityManager.createQuery(query, String.class).getResultList();
+
+            for (String s : resultList) {
+                System.out.println("s = " + s);
             }
 
             tx.commit();
