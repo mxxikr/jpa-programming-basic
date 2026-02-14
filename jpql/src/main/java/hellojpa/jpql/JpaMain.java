@@ -26,7 +26,7 @@ public class JpaMain {
             entityManager.flush();
             entityManager.clear();
             
-            String query = "select m from Member m left join m.team t on t.name = 'teamA'";
+            String query = "select m from Member m left join Team t on m.username = t.name";
             List<Member> result = entityManager.createQuery(query, Member.class).getResultList();
 
             tx.commit();
