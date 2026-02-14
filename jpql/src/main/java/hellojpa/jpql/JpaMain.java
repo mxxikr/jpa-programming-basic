@@ -27,15 +27,14 @@ public class JpaMain {
             entityManager.flush();
             entityManager.clear();
 
-            String query = "select nullif(m.username, '관리자') from Member m ";
+            String query = "select m.team from Member m";
 
 
-            List<String> resultList = entityManager.createQuery(query, String.class).getResultList();
+            List<Team> resultList = entityManager.createQuery(query, Team.class).getResultList();
 
-            for (String s : resultList) {
-                System.out.println("s = " + s);
+            for (Team team1 : resultList) {
+                System.out.println(team1);
             }
-
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
