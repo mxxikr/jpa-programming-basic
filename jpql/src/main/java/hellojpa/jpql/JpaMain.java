@@ -15,26 +15,44 @@ public class JpaMain {
         tx.begin(); // 트랜잭션 시작
 
         try {
-            Team team = new Team();
-            team.setName("teamA");
-            entityManager.persist(team);
+            Team teamA = new Team();
+            teamA.setName("팀A");
+            entityManager.persist(teamA);
 
-            Member member = new Member();
-            member.setUsername("member1");
-            member.setAge(10);
-            member.setTeam(team);
+            Team teamB = new Team();
+            teamB.setName("팀B");
+            entityManager.persist(teamB);
+
+            Member member1 = new Member();
+            member1.setUsername("회원1");
+            member1.setTeam(teamA);
+            entityManager.persist(member1);
+
+            Member member2 = new Member();
+            member2.setUsername("회원2");
+            member2.setTeam(teamA);
+            entityManager.persist(member2);
+
+            Member member3 = new Member();
+            member3.setUsername("회원3");
+            member3.setTeam(teamB);
+            entityManager.persist(member3);
 
             entityManager.flush();
             entityManager.clear();
 
-            String query = "select m.team from Member m";
+            String query = "select m from Member m join fetch m.team";
 
 
-            List<Team> resultList = entityManager.createQuery(query, Team.class).getResultList();
+            List<Team> result = entityManager.createQuery(query, Team.class).getResultList();
 
-            for (Team team1 : resultList) {
-                System.out.println(team1);
+            for (Team team : result) {
+                System.out.println("teamname = " + team.getName() + ", team = "+ team);
+                for (Member member : team.getMembers()) {
+                    System.out.println("-> username = " + member.getUsername() + ", member = " + member);
+                }
             }
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
