@@ -26,11 +26,8 @@ public class JpaMain {
             entityManager.flush();
             entityManager.clear();
             
-            String query = "select m from Member m inner join m.team t";
-            List<Member> result = entityManager.createQuery(query, Member.class)
-                    .setFirstResult(1)
-                    .setMaxResults(10)
-                    .getResultList();
+            String query = "select m from Member m left join m.team t on t.name = 'teamA'";
+            List<Member> result = entityManager.createQuery(query, Member.class).getResultList();
 
             tx.commit();
         } catch (Exception e) {
