@@ -20,24 +20,16 @@ public class JpaMain {
         tx.begin(); // 트랜잭션 시작
 
         try {
-            // Criteria 사용 준비
-            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-            CriteriaQuery<Member> query = cb.createQuery(Member.class);
+            Member member = new Member();
+            member.setUsername("member1");
+            entityManager.persist(member);
 
-            Root<Member> root = query.from(Member.class);
+            // flush -> commit, query
 
-            CriteriaQuery<Member> cq = query.select(root);
+            List<Member> result = entityManager.createNativeQuery("select MEMBER_ID, city, strret, zipcode, USERNAME from MEMBER", Member.class).getResultList();
 
-            String username = "dsasf";
-
-            if (username != null) {
-                cq.where(cb.equal(root.get("username"), "kim"));
-            }
-
-            List<Member> result = entityManager.createQuery(cq).getResultList();
-
-            for (Member member : result) {
-                System.out.println("member = " + member);
+            for (Member member1 : result) {
+                System.out.println("member1 = " + member1);
             }
 
             tx.commit();
