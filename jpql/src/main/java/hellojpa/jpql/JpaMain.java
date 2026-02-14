@@ -27,13 +27,8 @@ public class JpaMain {
             entityManager.flush();
             entityManager.clear();
 
-            String query =
-                    "select " +
-                    "case when m.age <= 10 then '학생요금' " +
-                    "    when m.age >= 60 then '경로요금' " +
-                    "    else '일반 요금' " +
-                    "end " +
-                    "from Member m";
+            String query = "select nullif(m.username, '관리자') from Member m ";
+
 
             List<String> resultList = entityManager.createQuery(query, String.class).getResultList();
 
