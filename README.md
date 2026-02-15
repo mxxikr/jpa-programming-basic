@@ -52,11 +52,11 @@
    * JPA의 데이터 타입 분류(엔티티 타입 vs 값 타입)
    * 임베디드 타입(Embedded Type)과 값 타입 컬렉션, 불변 객체(Immutable Object)의 필요성
 
-9. **객체지향 쿼리 언어1 - 기본 문법**
+9. [**객체지향 쿼리 언어1 - 기본 문법**](https://mxxikr.github.io/posts/jpa-jpql-basics/)
     * JPQL(Java Persistence Query Language)의 기본 문법 및 반환 타입
     * 프로젝션(Projection), 페이징(Paging), 조인(Join), 서브 쿼리, 조건식(CASE) 활용
 
-10. **객체지향 쿼리 언어2 - 중급 문법**
+10. [**객체지향 쿼리 언어2 - 중급 문법**](https://mxxikr.github.io/posts/jpa-jpql-intermediate/)
     * 경로 표현식(상태 필드, 연관 필드)과 명시적 조인
     * **페치 조인**(Fetch Join)의 동작 원리와 N+1 문제 해결 전략
     * 엔티티 직접 사용, Named 쿼리, 벌크 연산(Bulk Operation) 최적화
